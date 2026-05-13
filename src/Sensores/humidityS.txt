@@ -4,19 +4,19 @@ import time
 
 def sensorSimulationT(parcela, df, client):
     for index, row in df.iterrows():
-        dataT = {
+        dataHV = {
             "timestamp": str(datetime.datetime.now()),
             "parcela": parcela,
-            "sensor": "pH",
-            "value": row["Temperatura"]
+            "sensor": "Humedad Volumetrica del suelo",
+            "value": row["Humedad Volumetrica del Suelo"]
         }
 
         TOPIC = f"{parcela}/pH"
 
         client.publish(
-            TOPIC, json.dumps(dataT)
+            TOPIC, json.dumps(dataHV)
         )
 
-        print(dataT)
+        print(dataHV)
         print(index)
-        time.sleep(30)
+        time.sleep(60)

@@ -1,0 +1,22 @@
+import datetime
+import json 
+import time
+
+def sensorSimulationT(parcela, df, client):
+    for index, row in df.iterrows():
+        dataRS = {
+            "timestamp": str(datetime.datetime.now()),
+            "parcela": parcela,
+            "sensor": "Radiacion Solar",
+            "value": row["Promedio Radiacion Solar"]
+        }
+
+        TOPIC = f"{parcela}/Radiacion Solar"
+
+        client.publish(
+            TOPIC, json.dumps(dataRS)
+        )
+
+        print(dataRS)
+        print(index)
+        time.sleep(60)
