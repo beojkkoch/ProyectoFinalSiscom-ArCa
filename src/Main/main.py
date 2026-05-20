@@ -1,6 +1,4 @@
-# FUTURA MEJORA:
-# Ejecutar sensores concurrentemente usando threading
-# para simular adquisición IoT en tiempo real
+import threading
 
 from src.utils.csv_loader import sensor_df
 from src.Sensores.SensorSimulator import sensorSimulator
@@ -13,55 +11,58 @@ PARCELAS = [
     "parcela_4"
 ]
 
+SENSORES = [
+    {
+        "sensor": "temperatura",
+        "variable": "Temperatura",
+        "unidad": "ºC",
+        "topic_name": "temperatura",
+        "frecuencia": 5
+    },
+    {
+        "sensor": "humedad_suelo",
+        "variable": "Humedad Volumetrica del Suelo",
+        "unidad": "%",
+        "topic_name": "humedad_suelo",
+        "frecuencia": 7
+    },
+    {
+        "sensor": "radiacion_solar",
+        "variable": "Promedio Radiacion Solar",
+        "unidad": "MJ/m^2",
+        "topic_name": "radiacion_solar",
+        "frecuencia": 11
+    },
+    {
+        "sensor": "pH",
+        "variable": "pH",
+        "unidad": "pH",
+        "topic_name": "pH",
+        "frecuencia": 17
+    }
+]
+
+threads = []
+
 for parcela in PARCELAS:
-    sensorSimulator(
-        parcela = parcela,
-        cultivo ="arroz",
-        sensor = "temperatura",
-        variable = "Temperatura",
-        unidad = "ºC",
-        df= sensor_df,
-        client = client,
-        topic_name="temperatura",
-        frecuencia = 5 
-    )
+    for config in SENSORES:
+        thread = threading.Thread(
+            target=sensorSimulator,
+            kwargs={
+                "parcela": parcela,
+                "cultivo": "arroz",
+                "sensor": config["sensor"],
+                "variable": config["variable"],
+                "unidad": config["unidad"],
+                "df": sensor_df,
+                "client": client,
+                "topic_name": config["topic_name"],
+                "frecuencia": config["frecuencia"]
+            }
+        )
 
-    sensorSimulator(
-        parcela = parcela,
-        cultivo ="arroz",
-        sensor = "humedad_suelo",
-        variable = "Humedad Volumetrica del Suelo",
-        unidad = "%",
-        df= sensor_df,
-        client = client,
-        topic_name="humedad_suelo",
-        frecuencia = 8
-    )
+        threads.append(thread)
+        thread.start()
 
-    sensorSimulator(
-        parcela = parcela,
-        cultivo ="arroz",
-        sensor = "radiacion_solar",
-        variable = "Promedio Radiacion Solar",
-        unidad = "MJ/m^2",
-        df= sensor_df,
-        client = client,
-        topic_name="radiacion_solar",
-        frecuencia = 4
-
-    )
-
-    sensorSimulator(
-        parcela = parcela,
-        cultivo ="arroz",
-        sensor = "pH",
-        variable = "pH",
-        unidad = "pH",
-        df= sensor_df,
-        client = client,
-        topic_name="pH",
-        frecuencia = 15
-    )
-
-
-
+for thread in threads:
+    thread.join()

@@ -22,7 +22,7 @@ def sensorSimulator(
             "cultivo": cultivo,
             "parcela": parcela,
             "sensor": sensor,
-            "variabl": variable,
+            "variable": variable,
             "value": float(
                 str(row[variable]).replace(",",".")
             ),
