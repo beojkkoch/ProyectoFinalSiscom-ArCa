@@ -32,7 +32,7 @@ def sensorSimulator(
         }
 
         TOPIC = f"agricultura/{cultivo}/{parcela}/{topic_name}"
-        #TOPIC = "test"
+       
 
         result = client.publish(
             TOPIC,

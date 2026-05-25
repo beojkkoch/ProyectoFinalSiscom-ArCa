@@ -1,6 +1,6 @@
 import threading
 
-from src.utils.csv_loader import sensor_df
+from utils.csv_loaderCafe import sensor_df
 from src.Sensores.SensorSimulator import sensorSimulator
 from src.mqtt.mqttClient import client
 
@@ -14,28 +14,28 @@ PARCELAS = [
 SENSORES = [
     {
         "sensor": "temperatura",
-        "variable": "Temperatura",
+        "variable": "TEMPERATURA",
         "unidad": "ºC",
         "topic_name": "temperatura",
         "frecuencia": 5
     },
     {
         "sensor": "humedad_suelo",
-        "variable": "Humedad Volumetrica del Suelo",
+        "variable": "HUMEDAD RELATIVA",
         "unidad": "%",
         "topic_name": "humedad_suelo",
         "frecuencia": 7
     },
     {
         "sensor": "radiacion_solar",
-        "variable": "Promedio Radiacion Solar",
+        "variable": "RADIACIÓN SOLAR",
         "unidad": "MJ/m^2",
         "topic_name": "radiacion_solar",
         "frecuencia": 11
     },
     {
         "sensor": "pH",
-        "variable": "pH",
+        "variable": "Ph",
         "unidad": "pH",
         "topic_name": "pH",
         "frecuencia": 17
@@ -50,7 +50,7 @@ for parcela in PARCELAS:
             target=sensorSimulator,
             kwargs={
                 "parcela": parcela,
-                "cultivo": "arroz",
+                "cultivo": "Cafe",
                 "sensor": config["sensor"],
                 "variable": config["variable"],
                 "unidad": config["unidad"],
