@@ -50,7 +50,7 @@ for parcela in PARCELAS:
             target=sensorSimulator,
             kwargs={
                 "parcela": parcela,
-                "cultivo": "Cafe",
+                "cultivo": "cafe",
                 "sensor": config["sensor"],
                 "variable": config["variable"],
                 "unidad": config["unidad"],

@@ -34,11 +34,12 @@ client = InfluxDBClient(
 queryApi = client.query_api()  #Empieza consulta de datos a API
 
 #Endpoint
-@app.get("/api/sensores")
-def obtenerSensores():
+@app.get("/api/sensores/{cultivo}")
+def obtenerSensores(cultivo: str):
     query = f'''
     from(bucket: "{bucket}")
       |> range(start: -1m)
+      |> filter(fn: (r) => ["cultivo"] == "{cultivo}")
       |> last()
     '''
 

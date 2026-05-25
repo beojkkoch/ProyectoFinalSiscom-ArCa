@@ -118,9 +118,7 @@ useEffect(() => {
 
     try {
 
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/sensores"
-      );
+      const response = await fetch(`http://127.0.0.1:8000/api/sensores/${cropType}`);
 
       const data = await response.json();
 
