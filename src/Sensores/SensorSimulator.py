@@ -1,3 +1,5 @@
+# Se publican los datos MQTT de los sensores creados a partir de las variables del dataset
+
 import datetime
 import json
 import time
