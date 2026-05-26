@@ -16,6 +16,15 @@ def generar_valor_simulado(sensor):
                 random.uniform(35.1, 40)
             ]), 2)
         return round(random.uniform(25, 32), 2)
+    
+
+    if sensor == "humedad_relativa":
+        if generar_alerta:
+            return round(random.choice([
+                random.uniform(40, 59),
+                random.uniform(91, 100)
+                ]), 2)
+        return round(random.uniform(70, 90), 2)
 
     if sensor == "humedad_suelo":
         # Se deja en escala decimal porque así lo están manejando ahora:
